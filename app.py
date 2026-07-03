@@ -6,7 +6,7 @@ st.set_page_config(page_title="StoryVerse", page_icon="📚", layout="wide")
 
 api_key = os.getenv("GEMINI_API_KEY") or st.secrets["GEMINI_API_KEY"]
 
-client = genai.Client(api_key=api_key)
+genai.configure(api_key=api_key)
 
 if "story" not in st.session_state:
     st.session_state.story = ""
@@ -22,11 +22,7 @@ Idea:
 {prompt}
 """
 
-        response = client.models.generate_content(
-            model="gemini-1.5-flash",
-            contents=full_prompt
-        )
-
+        response = genai.GenerativeModel("gemini-1.5-flash").generate_content(full_prompt)
         return response.text
 
     except Exception as e:
