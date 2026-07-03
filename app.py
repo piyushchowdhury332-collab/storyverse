@@ -22,12 +22,15 @@ Idea:
 {prompt}
 """
 
-        response = genai.GenerativeModel("gemini-1.5-flash").generate_content(full_prompt)
+        response = genai.GenerativeModel(
+            "models/gemini-1.5-flash-latest"
+        ).generate_content(full_prompt)
+
         return response.text
 
     except Exception as e:
         return f"Error: {str(e)}"
-
+    
 st.title("📚 StoryVerse")
 
 prompt = st.text_area("Story Idea")
