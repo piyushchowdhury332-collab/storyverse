@@ -1,5 +1,5 @@
 import streamlit as st
-from google import genai
+import google.generativeai as genai
 import os
 
 st.set_page_config(page_title="StoryVerse", page_icon="📚", layout="wide")
@@ -12,28 +12,25 @@ if "story" not in st.session_state:
     st.session_state.story = ""
 
 def generate_story(prompt, genre, length, tone):
-    full_prompt = f"""
+    try:
+        full_prompt = f"""
 Write a {length} {genre} story.
 
 Tone: {tone}
 
 Idea:
 {prompt}
-
-Rules:
-- Add title
-- Engaging story
-- Proper paragraphs
-- Strong ending
 """
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=full_prompt
-    )
+        response = client.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=full_prompt
+        )
 
-    return response.text
+        return response.text
 
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 st.title("📚 StoryVerse")
 
