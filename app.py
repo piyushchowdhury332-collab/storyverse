@@ -22,9 +22,8 @@ Idea:
 {prompt}
 """
 
-        response = genai.GenerativeModel(
-            "models/gemini-1.5-flash-latest"
-        ).generate_content(full_prompt)
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(full_prompt)
 
         return response.text
 
